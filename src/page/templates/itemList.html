@@ -1,0 +1,32 @@
+<script type="text/template">
+	<section class="hot-part part-con">
+        <ul id="hot_part_id" class="row-list clear-fix hidden">
+            <li class="row-cell-2 skirt-node" event-func="scope.itemDetail" event-data="${@itemId}" store-id="${@storeId}">
+                <div class="item-content">
+                    <div class="img-con">
+                        <img tsrc="${@headPicUrl}" src="/static/img/common/default.png"/>
+                    </div>
+                    <p class="brand-name hidden-text">
+                        <span>${@brandName||未知品牌}</span>
+                        <!--<span class="item-name">${@itemName||未知商品}</span>-->
+                    </p>
+                    <p class="item-name hidden-text">${@itemName}</p>
+                    <div class="bt-price">
+                        <div class="left">
+                            <span class="flag-con">${@countryFlag}</span>
+                            <span>${@exchangeunit.exchangeSign}</span>
+                            <span>${@storePrice}</span>
+                        </div>
+                        <div data-discount="${@discount}" class="right" style="display: ${@rightDisplay};">
+                        <span class="discount-sign">
+                            <i class="icon-logo"></i>
+                        </span>
+                            <label style="display: ${@discountDsiplay};">${@discount}折</label>
+                            <label style="display: ${@rebateDisplay};">返${@rebate}</label>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+</script>

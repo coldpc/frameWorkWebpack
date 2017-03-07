@@ -1,7 +1,10 @@
+//import("./Skirt.js");
+
 (function(w){
-	/*
-	 * 声明获得类
-	 */
-	var $$ = w.yaok = w.yaok || {};
+	//skirt函数
+	var config = w.document.documentElement.dataset;
 	
+	
+	
+	w.skirt = new Skirt();
 })(window !== undefined ? window : this);

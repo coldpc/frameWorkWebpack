@@ -1,0 +1,161 @@
+'use strict';
+
+//编译路径
+var baseConfig = {
+	dest: 'build/', //目标路径
+	version: "2.0.2", //版本号
+};
+
+var gulp = require('gulp');
+
+gulp.task('default', function() {
+  return gulp.src('foo.js')
+    // 这会输出一个未压缩过的版本
+    .pipe(gulp.dest(DEST))
+    // 这会输出一个压缩过的并且重命名未 foo.min.js 的文件
+    .pipe(uglify())
+    .pipe(rename({ extname: '.min.js' }))
+    .pipe(gulp.dest(DEST));
+});
+
+var fs = require("fs");
+var sass = require("sass"); //sass插件
+var rename = require('gulp-rename'); //重命名
+var uglify = require('gulp-uglify'); //压缩文件
+
+//var autoprefixer = require("gulp-autoprefixer");
+//var filter = require("gulp-filter");
+//var postcss = require("gulp-postcss");
+var include = require("gulp-html-tag-include");
+//var precss = require("precss");
+//var browserSync = require("browser-sync").create();
+
+var gulpImports = require('gulp-imports');
+gulp.task('imports', function() {
+    gulp.src("src/static/"+ pages[i] +"/**.html")
+        .pipe(gulpImports())
+        .pipe(gulp.dest('./result'));
+});
+gulp.task('default', function() {
+    gulp.run('imports');
+});
+
+var reload = browserSync.reload;
+var modules = fs.readdirSync("src/modules");
+var pages = fs.readdirSync("src/pages");
+//var concat = require("gulp-concat");
+var minifyCss = require("gulp-minify-css"); //- 压缩CSS为一行；
+var rev = require("gulp-rev");  //版本号控制
+var svgSprite = require("gulp-svg-sprites");
+// var base64 = require('./build/gulp-base64');
+//html
+gulp.task("html", function () {
+  for(var i in pages){
+    //html
+    gulp.src("src/pages/"+ pages[i] +"/**.html")
+        .pipe(include())
+        .pipe(gulp.dest("dist/pages/html/"+ pages[i]));
+  }
+  for(var i in modules) {
+    if(modules[i] !== ".DS_Store") {
+      //html
+      gulp.src("src/modules/"+ modules[i] +"/**.html")
+          .pipe(include())
+          .pipe(gulp.dest("dist/modules/"+ modules[i]));      
+    }
+      
+  }
+});
+//css
+gulp.task("css", function () {
+  for(var i in pages){
+    //css
+    gulp.src("src/pages/"+ pages[i] +"/**.css")
+    .pipe(
+        postcss([
+            require("precss")({ /* options */ })
+        ])
+    )
+    .pipe(autoprefixer({
+            browsers: ["last 10 versions"],
+            cascade: false
+    }))
+    .pipe(gulp.dest("dist/pages/css/"+ pages[i]));
+  }
+  for(var i in modules) {
+    if(modules[i] !== ".DS_Store") {
+      
+      //postcss
+      gulp.src("src/modules/"+ modules[i] +"/**.css")
+        .pipe(
+            postcss([
+                require("precss")({ /* options */ })
+            ])
+        )
+        .pipe(autoprefixer({
+            browsers: ["last 10 versions"],
+            cascade: false
+        }))
+        .pipe(gulp.dest("dist/modules/"+ modules[i]));
+    }
+      
+  }
+});
+gulp.task("scss", function () {
+  for(var i in pages){
+    //sass
+    gulp.src("src/pages/"+ pages[i] +"/**.scss")
+    .pipe(sass({
+        includePaths: [
+          "./node_modules/sass-list-maps"
+        ]
+    }).on("error", sass.logError))
+    .pipe(autoprefixer({
+            browsers: ["last 10 versions"],
+            cascade: false
+    }))
+    .pipe(gulp.dest("dist/pages/html/"+ pages[i]));
+  }
+  
+  for(var i in modules) {
+    if(modules[i] !== ".DS_Store") {
+      //sass
+      gulp.src("src/modules/"+ modules[i] +"/**.scss")
+      .pipe(sass.sync().on("error", sass.logError))
+      .pipe(autoprefixer({
+            browsers: ["last 10 versions"],
+            cascade: false
+      }))
+      .pipe(gulp.dest("dist/modules/"+ modules[i]));
+    }
+      
+  }
+});
+//concat
+gulp.task("concat", function() {   
+  gulp.src("**/*.css", {cwd: "dist/pages/html"})
+  .pipe(concat("main.min.css"))
+  // .pipe(minifyCss())   //压缩文件
+  // .pipe(rev()) 
+  .pipe(gulp.dest("dist/css/"));       
+});
+//js
+gulp.task("js", function () {
+  for(var i in pages){
+    gulp.src("src/pages/"+ pages[i] +"/**.js")
+    .pipe(gulp.dest("dist/pages/js/"+ pages[i]));
+  }
+  for(var i in modules) {
+    if(modules[i] !== ".DS_Store") {
+      gulp.src("src/modules/"+ modules[i] +"/**.js")
+      .pipe(gulp.dest("dist/modules/"+ modules[i]));
+    }
+      
+  }
+  gulp.src("src/vender/**.js")
+  .pipe(gulp.dest("dist/vender/"));
+});
+
+gulp.task("default", ["html", "js"]);
+
+

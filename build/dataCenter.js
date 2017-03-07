@@ -1,1 +1,0 @@
-var header = require('./src/stataic/dataCenter/a.js');

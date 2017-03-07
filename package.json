@@ -1,9 +1,12 @@
 {
-  "name": "gulp-rev-replace",
+  "name": "c",
   "version": "0.4.3",
   "description": "Rewrite occurences of filenames which have been renamed by gulp-rev",
   "main": "index.js",
-  "repository": "jamesknelson/gulp-rev-replace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesknelson/gulp-rev-replace.git"
+  },
   "scripts": {
     "test": "mocha"
   },
@@ -15,11 +18,7 @@
     "replace",
     "asset"
   ],
-  "author": {
-    "name": "James K Nelson",
-    "email": "james@numbattech.com",
-    "url": "http://jamesknelson.com"
-  },
+  "author": "James K Nelson <james@numbattech.com> (http://jamesknelson.com)",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -34,9 +33,17 @@
     "gulp-filter": "^3.0.1",
     "gulp-footer": "^1.0.5",
     "gulp-header": "^1.8.8",
+    "gulp-imports": "0.0.3",
     "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
     "gulp-rev": "^6.0.1",
+    "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.1",
-    "mocha": "^2.3.4"
-  }
+    "mocha": "^2.3.4",
+    "sass": "^0.5.0"
+  },
+  "bugs": {
+    "url": "https://github.com/jamesknelson/gulp-rev-replace/issues"
+  },
+  "homepage": "https://github.com/jamesknelson/gulp-rev-replace#readme"
 }
